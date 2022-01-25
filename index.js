@@ -17,14 +17,25 @@ app.get('/movies', (req,res) => {
 
 
         $("a[class='ml-mask jt'] ",html).each(function () {
-            const title=$(this).attr('title');
             const url= "https://123moviesgo.ga"+$(this).attr('href')
+            const image=$(this).children('img').first().prop('data-original');
             movies.push({
                 title,
                 url,
+                image,
             })
         })
-        res.json(movies)
+        res.send(movies)
+
+    })
+    .catch((err)=>{console.error(err)})
+})
+app.get("/movies/:id",(req, res)=>{
+    const title=req.params.id
+    const url ="https://123moviesgo.ga/high-speed-hd-streaming.html?title=" + title
+    axios.get(url)
+    .then(response =>{
+        res.redirect(url)
     })
     .catch((err)=>{console.error(err)})
 })
